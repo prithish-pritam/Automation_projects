@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+	<title>Supernova</title>
+	<script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<style type="text/css">
+	html{
+		background-color: #1D2762;
+		}
+
+	h1{
+		color: #ffffff;
+		font-size: 16px;
+		padding-left: 3%;
+	}
+
+	h2{
+		color: #ffffff;
+		font-size: 20px;
+	}
+
+	.logoimg{
+		padding-left: 15%;
+		padding-top: 7%;
+		width: 50%;
+		height: auto;
+	}
+
+	.bgimg{
+		position: absolute;
+		bottom: 2%
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+	}
+
+	.button{
+   background-color:#354BC8;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:3px solid #ffffff;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:12px;
+  padding:7px 20px;
+  text-decoration:none;
+  text-shadow:0px -1px 0px #5b6178;
+	}
+
+   .buttonbtn{
+   background-color:#F6939E;
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  border-radius:4px;
+  border:2px solid #ffffff;
+  display:inline-block;
+  cursor:pointer;
+  color:#000000;
+  font-family:Arial;
+  font-size:12px;
+  padding:7px 20px;
+  text-decoration:none;
+  text-shadow:0px -1px 0px #5b6178;
+	}
+
+div.sethead{
+	position: relative;
+    top:90%;
+}
+
+div.absolute  {
+    position: absolute ;
+    left: 3%;
+    top: 35%;
+}
+
+div.absolute11  {
+    position: absolute ;
+    left: 20%;
+    top: 15%;
+}
+
+div.absolute1  {
+    position: absolute ;
+    top: 35%;
+    right: 3%;
+}
+
+div.absolute2  {
+    position: absolute ;
+    left: 30%;
+  top: 45%;
+}
+
+div.absolute3  {
+    position: absolute ;
+    right: 30%;
+    top: 45%;
+}
+
+div.absolute4  {
+    position: absolute ;
+    left: 30%;
+    top: 55%;
+}
+
+div.absolute5  {
+    position: absolute ;
+    right: 30%;
+   top: 55%;
+}
+
+div.absolute6  {
+    position: absolute ;
+    left: 30%;
+    top: 65%;
+}
+
+div.absolute7  {
+    position: absolute ;
+    right: 30%;
+    top: 65%;
+}
+
+div.absolute8  {
+    position: absolute ;
+    left: 30%;
+    top: 75%;
+}
+
+div.absolute9  {
+    position: absolute ;
+    right: 30%;
+    top: 320px;
+}
+
+.btn1{
+	position: absolute;
+	left: 27%;
+	padding: 6px 10%;
+}
+
+.btn2{
+	padding: 6px 36.5%;
+}
+
+
+.btn3{
+  padding:6px 20%;
+}
+
+.btn4{
+  padding:6px 40%;
+}
+
+.btn5{
+  padding:6px 44px;
+}
+
+.btn6{
+  padding:6px 58px;
+}
+
+.btn7{
+  padding: 6px 61px;
+}
+
+.btn8{
+  padding: 6px 42px;
+}
+
+.btn9{
+   padding:6px 55px;
+}
+
+.btn10{
+  padding: 6px 33px;
+}
+
+.button:active {
+  position:relative;
+  top:1px;
+}
+.button4 {border-radius: 20px 0px 20px 0px;}
+
+.button5{
+  padding: 20px;
+}
+
+
+
+	</style>
+
+        <script>
+          var socket= io.connect();
+          socket.on('ledstatus',function(data){
+             console.log(data);
+         });
+          
+       var itemarr=['all','sw1','sw2','sw3','sw4','sw5','sw6','sw7','sw8','sw9','sw10','sw11','sw12','sw13','sw14','sw15','sw16','sw17','sw18','sw19','sw20','sw21','sw22','sw23','sw24','sw25'];
+         var togarr=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+         function switchonoff(data){
+          var gdata= String(data);
+           for (var i = 0; i < itemarr.length ; i++) {
+             if (gdata == itemarr[i]) {
+              if (togarr[i]==0) {
+                  var newdata= itemarr[i]+' on';
+                  console.log(newdata);
+                  socket.emit('neeta',newdata);
+                  togarr[i]=1;
+                  for (var j=0; j < i; j++) {
+                  	togarr[j]=0;
+                  }
+                  for (var j=itemarr.length-1; j > i; j--) {
+                  	togarr[j]=0;
+                  }
+              }
+              else{
+                var newdata= itemarr[i]+' off';
+                  console.log(newdata);
+                  socket.emit('neeta',newdata);
+                  togarr[i]=0;
+              }
+             }
+           }
+         } 
+         
+		function showmenu(){
+			document.getElementById('row2').style.visibility="visible";
+			document.getElementById('imgid').style.visibility="visible";
+			document.getElementById('row1').style.visibility="hidden";
+		}
+
+		function backmenu(){
+			document.getElementById('row2').style.visibility="hidden";
+			document.getElementById('imgid').style.visibility="hidden";
+			document.getElementById('row1').style.visibility="visible";
+		}
+
+		function showsub(data){
+			var arr= ['row1','row2','row3','row4','row5','row6','row7'];
+			//alert(data);
+			for (var i = 0; i < arr.length; i++) {
+				if (arr[i]==data) {
+					document.getElementById(arr[i]).style.visibility="visible";
+					var subdata= arr[i];
+					socket.emit('neeta',subdata);
+				}
+				else{
+					document.getElementById(arr[i]).style.visibility="hidden";
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+<div id="maindiv">
+	<div id="row1" class="home" style="position: absolute; top:20%;left:35%; max-width: 400px; max-height: 400px;">
+		 <img src="http://localhost:3000/img/6.png" alt="image" class="logoimg">
+		<h1>Welcome to Your New World</h1>
+		<button id="mainbtn" class="button btn1" onclick="showmenu()">Main Menu</button>
+	</div>
+
+	<div id="imgid" class="" style="visibility: hidden;">
+		<img src="http://localhost:3000/img/home_bg2.jpg" alt="image" class="bgimg">
+	</div>
+	<!-- Main Menu details -->
+	<div id="row2" class="submenu" style="visibility: hidden;">
+	<div id="iconid" style="position: absolute; z-index: 2; top:7%; right: 7%;">
+		<img src="http://localhost:3000/img/6.png" alt="image" style="width: 100px; height: 100px;">
+	</div>
+    <div class="absolute">
+	<button class="button btn2" onclick="showsub('row3')">Astralis</button>
+	<br>
+	<br>
+	<button class="button" onclick="showsub('row4')" style="padding: 6px 15%">Nova East Residences</button>
+	<br>
+	<br>
+	<button class="button" onclick="showsub('row7')" style="padding: 6px 15%">Nova West Residences</button>
+	<br>
+	<br>
+	<button class="button btn4" onclick="showsub('row6')">Spira</button>
+	<br>
+	<br>
+	<button class="button btn" onclick="showsub('row5')" style="padding: 6px 22%">Queen Residency</button>
+	</div>  
+	<div class="absolute1">
+	<button class="button btn7" onclick="switchonoff('sw1')">Podium Place</button>
+	<br>
+	<br>
+	<button class="button btn" onclick="switchonoff('sw2')" style="padding: 6px 40%">Aurora</button>
+	<br>
+	<br>
+	<button class="button btn6" onclick="switchonoff('sw3')">Radiance Place</button>
+	<br>
+	<br>
+	<button class="button btn" onclick="switchonoff('sw4')" style="padding: 6px 24%">Metro Connectivity</button>
+	<br/>
+	<br>
+	<button id="gomain" onclick="backmenu()" class="buttonbtn" style="padding: 6px 34%">Main menu</button>
+	</div>  
+    <div>
+    	<button id="gomain" onclick="switchonoff('all')" class="button" style="padding: 6px 10%;position: absolute; left: 34%; top:80%">All Area</button>
+    </div>
+	</div>
+
+	<!-- Astrails Details -->
+	<div id="row3" class="ast_menu" style="visibility: hidden;">
+	<div id="iconid" style="position: absolute; z-index: 2; top:7%; left: 5%">
+		<img src="http://localhost:3000/img/6.png" alt="image" style="width: 100px; height: 100px;">
+	</div>
+	<div class="absolute11">
+	<h2>Astrails</h2>
+	<button class="button btn10" onclick="switchonoff('sw5')">Entrance Lobby</button>
+	<br/>
+	<br/>
+	<button class="button btn8" onclick="switchonoff('sw6')">Office Floors</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw7')" style="padding: 6px 22%">Terrace Floors</button>
+	<br/>
+	<br/>
+ 	<button class="button btn" onclick="switchonoff('sw8')" style="padding: 6px 32%">Cafeteria</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw9')" style="padding: 6px 15%">Recreational Area</button>
+	<br/>
+	<br/>
+	<br/>
+	<button id="returnid" onclick="showsub('row2')" class="buttonbtn">Back</button>
+	</div>          
+	</div>
+
+	<!-- Nova East Details -->
+	<div id="row4" class="nova_menu" style="visibility: hidden;">
+	 <div id="iconid" style="position: absolute; z-index: 2; top:7%; left: 5%">
+		<img src="http://localhost:3000/img/6.png" alt="image" style="width: 100px; height: 100px;">
+	</div>
+    <div class="absolute11">
+	<h2>Nova East Residences</h2>
+	<button class="button btn10" onclick="switchonoff('sw20')">Entrance Lobby</button>
+	<br/>
+	<br/>
+	<button class="button btn9" onclick="switchonoff('sw10')"> 2/3 BHK</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw11')" style="padding: 6px 28%">Pent  House</button>
+	<!--</div>     
+	 <div class="absolute6">
+ 	<button class="button btn9" onclick="clubtoggle()">Cafeteria</button>
+	</div>      
+	 <div class="absolute6">-->
+	 <br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw21')" style="padding: 6px 15%">Recreational Area</button>
+	<br/>
+	<br>
+	<br>
+	<button id="returnid" onclick="showsub('row2')" class="buttonbtn">Back</button>
+	</div>          
+	</div>
+
+	<!-- Nova West Recident -->
+	<div id="row7" class="nova_menu" style="visibility: hidden;">
+	 <div id="iconid" style="position: absolute; z-index: 2; top:7%; left: 5%">
+		<img src="http://localhost:3000/img/6.png" alt="image" style="width: 100px; height: 100px;">
+	</div>
+    <div class="absolute11">
+	<h2>Nova West Residences</h2>
+	<button class="button btn10" onclick="switchonoff('sw20')">Entrance Lobby</button>
+	<br/>
+	<br/>
+	<button class="button btn9" onclick="switchonoff('sw10')"> 2/3 BHK</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw11')" style="padding: 6px 28%">Pent  House</button>
+	<!--</div>     
+	 <div class="absolute6">
+ 	<button class="button btn9" onclick="clubtoggle()">Cafeteria</button>
+	</div>      
+	 <div class="absolute6">-->
+	 <br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw21')" style="padding: 6px 15%">Recreational Area</button>
+	<br/>
+	<br>
+	<br>
+	<button id="returnid" onclick="showsub('row2')" class="buttonbtn">Back</button>
+	</div>          
+	</div>
+		<!-- Queen Details -->
+	<div id="row5" class="queen_menu" style="visibility: hidden;">
+	<div id="iconid" style="position: absolute; z-index: 2; top:7%; left: 5%">
+		<img src="http://localhost:3000/img/6.png" alt="image" style="width: 100px; height: 100px;">
+	</div>
+    <div class="absolute11">
+	<h2>Queen Residency</h2>
+	<button class="button btn10" onclick="switchonoff('sw22')">Entrance Lobby</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw12')" style="padding: 7px 44px;">JW Marriott</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw13')" style="padding: 7px 23px;">Armani Residences</button>
+	<!--</div>     
+	 <div class="absolute6">
+ 	<button class="button btn9" onclick="clubtoggle()">Cafeteria</button>
+	</div>      
+	 <div class="absolute6">-->
+	 <br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw23')" style="padding: 6px 15%">Recreational Area</button>
+	<br/>
+	<br/>
+	<br/>
+	<button id="returnid" onclick="showsub('row2')" class="buttonbtn">Back</button>
+	</div>          
+	</div>
+
+		<!-- spira Details -->
+	<div id="row6" class="spira_menu" style="visibility: hidden;">
+	<div id="iconid" style="position: absolute; z-index: 2; top:7%; left: 5%">
+		<img src="http://localhost:3000/img/6.png" alt="image" style="width: 100px; height: 100px;">
+	</div>
+	  <h2 style="position: absolute; left: 20%; top:20%;">Spira</h2>
+    <div class="absolute">	
+	<button class="button btn" onclick="switchonoff('sw24')" style="padding: 7px 65px">Entrance Lobby</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw14')" style="padding: 7px 60px">Spira Residences</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw15')"  style="padding: 7px 75px">Spira Suites</button>
+	<br/>
+	<br/>
+ 	<button class="button btn" onclick="switchonoff('sw16')"  style="padding: 7px 90px">Club S</button>
+	</div>
+	<div class="absolute1">
+	<button class="button btn" onclick="switchonoff('sw17')" style="padding: 7px 48px">Spira Ones Residence</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw18')" style="padding: 7px 63px">Spira Ones Villas</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw19')" style="padding: 7px 30px">Observatory Deck & Helipad</button>
+	<br/>
+	<br/>
+	<button class="button btn" onclick="switchonoff('sw25')" style="padding: 7px 60px">Recreational Area</button>
+	<br/>
+	<br/>
+	<br>
+	<button id="returnid" onclick="showsub('row2')" class="buttonbtn">Back</button>
+	</div>  
+
+	</div>
+</div>
+
+</body>
+</html>
