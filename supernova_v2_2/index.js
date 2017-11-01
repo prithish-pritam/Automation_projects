@@ -30,6 +30,8 @@ var gpio= require('onoff').Gpio;
    }
 
    var iv= null;
+   var east= false;
+   var west= false;
    io.on('connection',function(socket){
      socket.on('neeta',function(data){
         console.log(data);
@@ -56,7 +58,7 @@ var gpio= require('onoff').Gpio;
       }
      //single collection single function
 
-     if (setarr[0]!= 'all') {
+     /*if (setarr[0]!= 'all') {
      	var pdata=setarr[0];
      	var point= null;
      	for (var i = 0; i < nplist.length; i++) {
@@ -79,7 +81,7 @@ var gpio= require('onoff').Gpio;
      		}
      		
      	}
-     }
+     }*/
      //for subdiv 
 
      if (getdata == 'row3') {
@@ -89,11 +91,15 @@ var gpio= require('onoff').Gpio;
      }
 
      if (getdata == 'row4') {
+      east= true;
+      west= false;
+       
        nlist[9].writeSync(0);
        nlist[10].writeSync(0);
        nlist[19].writeSync(0);
        nlist[20].writeSync(0);
-
+       nlist[24].writeSync(0);
+       nlist[25].writeSync(1);
      }
 
      if (getdata == 'row5') {
@@ -111,21 +117,34 @@ var gpio= require('onoff').Gpio;
        nlist[17].writeSync(0);
        nlist[18].writeSync(0);
        nlist[23].writeSync(0);
-       nlist[24].writeSync(0);
+       nlist[3].writeSync(0);
      }
 
      if (getdata == 'row7') {
+      east=false;
+      west=true;
+       
        nlist[9].writeSync(0);
        nlist[10].writeSync(0);
        nlist[19].writeSync(0);
        nlist[20].writeSync(0);
+       nlist[24].writeSync(1);
+       nlist[25].writeSync(0);
      }
 
      //for single connection
-      /*if (setarr[0]== 'sw1') {
+     var point=null;
+      if (setarr[0]== 'sw1') {
         if (setarr[1]=='on') {
           nlist[0].writeSync(0); //all lights on
+          point=0;
           console.log('sw1 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[0].writeSync(1);
@@ -136,7 +155,14 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw2') {
         if (setarr[1]=='on') {
           nlist[1].writeSync(0); //all lights on
+          point=1;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[1].writeSync(1);
@@ -147,18 +173,32 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw3') {
         if (setarr[1]=='on') {
           nlist[2].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=2;
+          console.log('sw3 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[2].writeSync(1);
-          console.log("sw1 lights off");
+          console.log("sw3 lights off");
         }
       }
 
       if (setarr[0]== 'sw4') {
         if (setarr[1]=='on') {
           nlist[3].writeSync(0); //all lights on
-          console.log('sw2 lights On');
+          point=3;
+          console.log('sw3 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[3].writeSync(1);
@@ -169,7 +209,14 @@ var gpio= require('onoff').Gpio;
      if (setarr[0]== 'sw5') {
         if (setarr[1]=='on') {
           nlist[4].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=4;
+          console.log('sw5 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[4].writeSync(1);
@@ -180,29 +227,50 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw6') {
         if (setarr[1]=='on') {
           nlist[5].writeSync(0); //all lights on
-          console.log('sw2 lights On');
+          point=5;
+          console.log('sw6 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[5].writeSync(1);
-          console.log("sw2 lights off");
+          console.log("sw6 lights off");
         }
       }
 
       if (setarr[0]== 'sw7') {
         if (setarr[1]=='on') {
           nlist[6].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=6;
+          console.log('sw7 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[6].writeSync(1);
-          console.log("sw1 lights off");
+          console.log("sw7 lights off");
         }
       }
 
       if (setarr[0]== 'sw8') {
         if (setarr[1]=='on') {
           nlist[7].writeSync(0); //all lights on
-          console.log('sw2 lights On');
+          point=7;
+          console.log('sw8 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[7].writeSync(1);
@@ -213,7 +281,14 @@ var gpio= require('onoff').Gpio;
     if (setarr[0]== 'sw9') {
         if (setarr[1]=='on') {
           nlist[8].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=8;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[8].writeSync(1);
@@ -221,10 +296,17 @@ var gpio= require('onoff').Gpio;
         }
       }
 
-      if (setarr[0]== 'sw10') {
+      if (setarr[0]== 'sw10' && east == true) {
         if (setarr[1]=='on') {
           nlist[9].writeSync(0); //all lights on
+          point=9;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 3; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[9].writeSync(1);
@@ -232,21 +314,70 @@ var gpio= require('onoff').Gpio;
         }
       }
 
-      if (setarr[0]== 'sw11') {
+      if (setarr[0]== 'sw11' && east == true) {
         if (setarr[1]=='on') {
           nlist[10].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=10;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[10].writeSync(1);
           console.log("sw1 lights off");
         }
       }
+      ////////////////nova west/////////////////////////
+      if (setarr[0]== 'sw10' && west == true) {
+        if (setarr[1]=='on') {
+          nlist[9].writeSync(0); //all lights on
+          point=9;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 3; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
+        }
+        else{
+          nlist[9].writeSync(1);
+          console.log("sw2 lights off");
+        }
+      }
 
+      if (setarr[0]== 'sw11' && west == true) {
+        if (setarr[1]=='on') {
+          nlist[10].writeSync(0); //all lights on
+          point=10;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
+        }
+        else{
+          nlist[10].writeSync(1);
+          console.log("sw1 lights off");
+        }
+      }
       if (setarr[0]== 'sw12') {
         if (setarr[1]=='on') {
           nlist[11].writeSync(0); //all lights on
+          point=11;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[11].writeSync(1);
@@ -257,7 +388,14 @@ var gpio= require('onoff').Gpio;
      if (setarr[0]== 'sw13') {
         if (setarr[1]=='on') {
           nlist[12].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=12;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[12].writeSync(1);
@@ -268,7 +406,14 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw14') {
         if (setarr[1]=='on') {
           nlist[13].writeSync(0); //all lights on
+          point=13;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[13].writeSync(1);
@@ -279,7 +424,14 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw15') {
         if (setarr[1]=='on') {
           nlist[14].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=14;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[14].writeSync(1);
@@ -290,7 +442,14 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw16') {
         if (setarr[1]=='on') {
           nlist[15].writeSync(0); //all lights on
+          point=15;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[15].writeSync(1);
@@ -301,7 +460,14 @@ var gpio= require('onoff').Gpio;
         if (setarr[0]== 'sw17') {
         if (setarr[1]=='on') {
           nlist[16].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=16;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[16].writeSync(1);
@@ -312,7 +478,14 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw18') {
         if (setarr[1]=='on') {
           nlist[17].writeSync(0); //all lights on
+          point=17;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[17].writeSync(1);
@@ -323,7 +496,14 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw19') {
         if (setarr[1]=='on') {
           nlist[18].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=18;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[18].writeSync(1);
@@ -331,10 +511,17 @@ var gpio= require('onoff').Gpio;
         }
       }
 
-      if (setarr[0]== 'sw20') {
+      if (setarr[0]== 'sw20' && east == true) {
         if (setarr[1]=='on') {
           nlist[19].writeSync(0); //all lights on
+          point=19;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 3; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[19].writeSync(1);
@@ -342,21 +529,71 @@ var gpio= require('onoff').Gpio;
         }
       }
        ////////////////////////////
-     if (setarr[0]== 'sw21') {
+     if (setarr[0]== 'sw21' && east == true) {
         if (setarr[1]=='on') {
           nlist[20].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=20;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 3; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[20].writeSync(1);
           console.log("sw1 lights off");
         }
       }
-
+   
+   /////////////nova west///////////////
+         if (setarr[0]== 'sw20' && west == true) {
+        if (setarr[1]=='on') {
+          nlist[19].writeSync(0); //all lights on
+          point=19;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 3; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
+        }
+        else{
+          nlist[19].writeSync(1);
+          console.log("sw2 lights off");
+        }
+      }
+       ////////////////////////////
+     if (setarr[0]== 'sw21' && west == true) {
+        if (setarr[1]=='on') {
+          nlist[20].writeSync(0); //all lights on
+          point=20;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 3; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
+        }
+        else{
+          nlist[20].writeSync(1);
+          console.log("sw1 lights off");
+        }
+      }
       if (setarr[0]== 'sw22') {
         if (setarr[1]=='on') {
           nlist[21].writeSync(0); //all lights on
+         point=21;
           console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[21].writeSync(1);
@@ -367,7 +604,14 @@ var gpio= require('onoff').Gpio;
       if (setarr[0]== 'sw23') {
         if (setarr[1]=='on') {
           nlist[22].writeSync(0); //all lights on
-          console.log('sw1 lights On');
+          point=22;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
         else{
           nlist[22].writeSync(1);
@@ -382,11 +626,18 @@ var gpio= require('onoff').Gpio;
         }
         else{
           nlist[23].writeSync(1);
-          console.log("sw2 lights off");
+          point=23;
+          console.log('sw2 lights On');
+          for (var j = 0; j < point; j++) {
+              nlist[j].writeSync(1);//lights off as ascending order
+            }
+            for (var j = nplist.length - 1; j > point; j--) {
+              nlist[j].writeSync(1); //lights off as decending order
+            }
         }
       }
       //////////////////////////////////////  
-    if (setarr[0]== 'sw25') {
+    /*if (setarr[0]== 'sw25') {
         if (setarr[1]=='on') {
           nlist[24].writeSync(0); //all lights on
           console.log('sw1 lights On');
@@ -395,7 +646,7 @@ var gpio= require('onoff').Gpio;
           nlist[24].writeSync(1);
           console.log("sw1 lights off");
         }
-      }*/  
+      } */ 
     
           
      });
